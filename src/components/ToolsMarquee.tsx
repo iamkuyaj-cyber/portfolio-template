@@ -1,10 +1,11 @@
 import { useMemo } from 'react'
+import { CloudArrowUp, type Icon } from '@/components/slab'
 
 /**
  * ToolsMarquee
  *
  * Horizontally scrolling strip of brand logos + labels for the tools you work with.
- * PLACEHOLDER - swap the list below for your own tools (icons live in public/icons/).
+ * The tools I work with (icons live in public/icons/).
  * The strip lives on the cream shader page, NOT inside a dark section.
  *
  * Implementation notes:
@@ -21,6 +22,8 @@ import { useMemo } from 'react'
  *        a single silhouette.
  *   The renderer picks the mode by whether a `color` is set: color -> mask,
  *   no color -> img.
+ *     3. A tool with no logo file yet shows a Phosphor glyph (`Glyph`) in its
+ *        place, tinted with `color`, until the real mark is added.
  * - Brand colors live in the data layer below (not tokens.css) because they are
  *   external brand identifiers, not part of the site palette. They are passed to
  *   CSS via `--brand-color` custom properties so the component stylesheet stays
@@ -32,23 +35,25 @@ import { useMemo } from 'react'
 
 type Tool = {
   name: string
-  iconPath: string
+  /** Logo file in public/icons. Omit (and set `Glyph`) until you have one. */
+  iconPath?: string
+  /** Stand-in glyph shown while there is no logo file. */
+  Glyph?: Icon
   /** When set, the SVG silhouette is tinted via CSS mask. Omit for multi-color marks. */
   color?: string
 }
 
+// Meta and Google Tag Manager marks are from Simple Icons (CC0).
 export const tools: Tool[] = [
-  { name: 'Claude Code',          iconPath: '/icons/claude-code-logo.png' },
-  { name: 'Codex',                iconPath: '/icons/codex.svg',           color: '#000000' },
-  { name: 'Cursor',               iconPath: '/icons/cursor.svg',          color: '#0F172A' },
-  { name: 'Hermes AI',            iconPath: '/icons/nousresearch.svg',    color: '#18181B' },
-  { name: 'VS Code',              iconPath: '/icons/vscode.svg' },
-  { name: 'GoHighLevel',          iconPath: '/icons/gohighlevel.png' },
-  { name: 'Lightspeed X-Series',  iconPath: '/icons/lightspeed.png' },
-  { name: 'Google Workspace',     iconPath: '/icons/googleworkspace.svg' },
-  { name: 'Zendesk',              iconPath: '/icons/zendesk.svg',         color: '#03363D' },
-  { name: 'Intercom',             iconPath: '/icons/intercom.svg',        color: '#1F8DED' },
-  { name: 'Slack',                iconPath: '/icons/slack.svg',           color: '#611F69' },
+  { name: 'Meta Ads Manager',                iconPath: '/icons/meta.svg',             color: '#0467DF' },
+  { name: 'GoHighLevel',                     iconPath: '/icons/gohighlevel.png' },
+  { name: 'Google Tag Manager',              iconPath: '/icons/googletagmanager.svg', color: '#246FDB' },
+  // TODO: add Stape's logo as public/icons/stape.svg (or .png), then replace
+  // `Glyph` with iconPath: '/icons/stape.svg'.
+  { name: 'Stape.io',                        Glyph: CloudArrowUp,                     color: '#0B1E3F' },
+  { name: 'Meta Pixel and Conversions API',  iconPath: '/icons/meta.svg',             color: '#0467DF' },
+  { name: 'Claude Code',                     iconPath: '/icons/claude-code-logo.png' },
+  { name: 'Google Workspace',                iconPath: '/icons/googleworkspace.svg' },
 ]
 
 export default function ToolsMarquee() {
@@ -60,7 +65,7 @@ export default function ToolsMarquee() {
     <section className="tools-marquee" aria-label="Tools I work with" data-reveal>
       <div className="tools-marquee__track" aria-hidden="true">
         {doubled.map((tool, i) => {
-          const useMask = tool.iconPath.endsWith('.svg') && !!tool.color
+          const useMask = !!tool.iconPath?.endsWith('.svg') && !!tool.color
           return (
             <div key={`${tool.name}-${i}`} className="tools-marquee__item">
               {/* A plain box on desktop (display: contents); on phones it is
@@ -74,6 +79,13 @@ export default function ToolsMarquee() {
                       ['--icon-url' as string]: `url('${tool.iconPath}')`,
                       ['--brand-color' as string]: tool.color ?? 'var(--navy)',
                     }}
+                  />
+                ) : tool.Glyph ? (
+                  <tool.Glyph
+                    className="tools-marquee__img"
+                    weight="duotone"
+                    color={tool.color ?? 'currentColor'}
+                    aria-hidden="true"
                   />
                 ) : (
                   <img
