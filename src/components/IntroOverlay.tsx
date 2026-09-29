@@ -28,7 +28,8 @@ import { profile } from '@/data/profile'
  * only - nothing here touches layout.
  */
 
-const WORDS = `${profile.displayName.line1} ${profile.displayName.line2}`.split(' ')
+const LINE1 = profile.displayName.line1.split(' ')
+const WORDS = [...LINE1, ...profile.displayName.line2.split(' ')]
 
 const IGNITE_MS = 300
 const RUN_MS = 1600
@@ -126,7 +127,9 @@ export default function IntroOverlay() {
 
       // Match the landing width exactly, so scale 1 IS the final layout.
       const width = t?.width ?? Math.min(760, window.innerWidth * 0.86)
-      title.style.width = `${width}px`
+      // +1px so sub-pixel rounding never pushes a word of a full line onto
+      // the next row; the row is left-aligned, so nothing shifts.
+      title.style.width = `${width + 1}px`
       canvas.style.width = `${width}px`
       canvas.style.height = `${CANVAS_H}px`
 
@@ -362,8 +365,13 @@ export default function IntroOverlay() {
     <div className="boot" aria-hidden="true" role="presentation">
       <div className="boot__title" ref={titleRef}>
         {WORDS.map((word, i) => (
-          <span className="boot__word" key={`${word}-${i}`}>
-            <span className="boot__word-in">{word}</span>
+          <span key={`${word}-${i}`} style={{ display: 'contents' }}>
+            {/* The headline is two lines (Home.tsx); break the row where the
+                real h1 breaks so the flight lands on the same shape. */}
+            {i === LINE1.length && <span className="boot__break" />}
+            <span className="boot__word">
+              <span className="boot__word-in">{word}</span>
+            </span>
           </span>
         ))}
       </div>

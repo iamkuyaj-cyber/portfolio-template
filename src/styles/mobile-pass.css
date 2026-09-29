@@ -58,18 +58,19 @@ html { -webkit-tap-highlight-color: transparent; }
      a filled animation would keep the page root a stacking context. */
   html.has-navigated .shell__panel > * { animation: route-rise 260ms var(--ease-out); }
 
-  /* ---------- 3. Headline: one line at every phone width ----------
+  /* ---------- 3. Headline: each half on one line at every phone width ----------
      Sized to the content box (viewport less both panel gutters) divided by
-     --headline-em, the headline's own width in em at this weight and tracking.
-     Retune it when you change the line in profile.ts: set the headline in a
-     700-weight system font at 100px with letter-spacing -0.024em, divide its
-     width by 100, add 2% slack. 15.4 fits the placeholder headline in
-     profile.ts (34 characters); a 30-character line needs about 12.8.
+     --headline-em, the width in em of the LONGER half of the headline (it is
+     two lines, see Home.tsx) at this weight and tracking. Retune it when you
+     change the lines in profile.ts: set the longer half in a 700-weight
+     system font at 100px with letter-spacing -0.024em, divide its width by
+     100, add 2% slack. 12.0 fits "Cheap leads are easy." (21 characters),
+     measured in a wide fallback font so it holds on every platform.
      Never larger than home.css's clamp. Not `nowrap`: a longer line, a larger
      text setting or Android font scaling wraps instead of clipping.
      .boot__title is the intro's copy and must match exactly (boot.css: change
      one, change both). */
-  :root { --headline-em: 15.4; }
+  :root { --headline-em: 12.0; }
   .home__title,
   .boot__title { font-size: min(clamp(30px, 3.5vw, 72px), calc((100vw - 2 * var(--panel-x)) / var(--headline-em))); }
 

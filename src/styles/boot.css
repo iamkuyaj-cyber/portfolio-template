@@ -67,6 +67,8 @@
   transform: translateY(132%);
   will-change: transform;
 }
+/* Forces line two onto its own row, matching the h1's two .home__line spans. */
+.boot__break { flex-basis: 100%; height: 0; }
 
 /* ---------- The canvas ----------
    An n8n execution in miniature: a half-pill trigger, square step nodes with

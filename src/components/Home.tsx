@@ -39,9 +39,10 @@ export default function Home() {
       <div className="home__head">
         <div className="home__headline">
           <h1 className="home__title" id="home-title">
-            <span className="home__line">
-              {displayName.line1} {displayName.line2}
-            </span>
+            {/* Two halves, two lines: a 41-character line only fits the
+                panel at a size too small to read as a headline. */}
+            <span className="home__line">{displayName.line1}</span>{' '}
+            <span className="home__line">{displayName.line2}</span>
           </h1>
 
           {!phone && (

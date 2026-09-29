@@ -34,10 +34,10 @@
   gap: clamp(20px, 4vw, 56px);
 }
 
-/* One line, never two. The size is bounded by what fits beside the CTA in the
-   panel at the 1100px breakpoint, not by what looks biggest at 1440. Below the
-   breakpoint the headline gets the full width and is allowed to wrap - a
-   29-character sentence cannot be one legible line on a 390px phone. */
+/* Two lines, one per half of profile.displayName, each held on one line. The
+   size is bounded by what fits beside the CTA in the panel at the 1100px
+   breakpoint, not by what looks biggest at 1440. Below the breakpoint the
+   headline gets the full width and is allowed to wrap. */
 .home__title {
   display: flex;
   flex-direction: column;

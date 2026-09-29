@@ -2,15 +2,14 @@
  * YOUR IDENTITY - start here.
  *
  * Everything that says who you are lives in this file: name, handle, photo,
- * socials, email and the Home headline. Every value below is a PLACEHOLDER.
- * Replace the text, or hand this file to your AI assistant and tell it what
- * to put in each field.
+ * socials, email and the Home headline. Values still marked TODO are waiting
+ * on you.
  *
  * Page-specific copy (projects, services, testimonials, FAQs) lives in the
  * other files in src/data/ and at the top of each view component.
  */
 
-import { Briefcase, SealCheck, Clock, type Icon } from '@/components/slab'
+import { CurrencyDollar, TrendUp, Clock, type Icon } from '@/components/slab'
 
 export type SocialLink = {
   label: string
@@ -46,31 +45,35 @@ export type Profile = {
 }
 
 export const profile: Profile = {
-  name: 'Your Name',
-  firstName: 'Your Name',
-  handle: '@yourhandle',
-  role: 'PLACEHOLDER - your title',
+  name: 'Jeun Agustero',
+  firstName: 'Jeun',
+  // TODO: your preferred @handle
+  handle: 'TODO',
+  role: 'Meta Ads and Creative Strategist',
+  // TODO: add your photo to public/ and point avatarSrc and portraitSrc at it
+  // (and the preload link in index.html).
   avatarSrc: '/avatar.svg',
-  verifiedLabel: 'PLACEHOLDER - what the tick means (e.g. a certification)',
-  email: 'you@example.com',
-  location: 'PLACEHOLDER - your city or timezone',
+  // TODO: what the tick means (e.g. FAMA Elite Season 3), or "Verified"
+  verifiedLabel: 'TODO',
+  email: 'jgagustero@gmail.com',
+  location: 'Davao City, Philippines (GMT+8)',
   // Pick any icon from https://phosphoricons.com and import it above.
   stats: [
-    { value: '0 yrs', label: 'PLACEHOLDER', Icon: Briefcase },
-    { value: '#000', label: 'PLACEHOLDER', Icon: SealCheck },
-    { value: 'GMT+0', label: 'PLACEHOLDER', Icon: Clock },
+    { value: '$3.5M+', label: 'Managed ad spend', Icon: CurrencyDollar },
+    { value: '5.9x', label: 'Largest account scale', Icon: TrendUp },
+    { value: 'GMT+8', label: 'Davao, PH', Icon: Clock },
   ],
   // The intro types this line, then flies it into the Home headline.
   // Keep it short: two halves, 5-8 words total.
-  displayName: { line1: 'Your headline here.', line2: 'Keep it short.' },
+  displayName: { line1: 'Cheap leads are easy.', line2: 'Revenue is the job.' },
   hero: {
-    body: 'PLACEHOLDER - one line on what you do and who you do it for.',
+    body: 'I turn Meta ad spend into revenue, not just leads and clicks, for service businesses and ecommerce brands.',
     portraitSrc: '/avatar.svg',
-    portraitAlt: 'Portrait placeholder',
+    portraitAlt: 'Jeun Agustero',
   },
   socials: [
-    { label: 'Facebook profile', href: '#', iconPath: '/icons/facebook.svg' },
-    { label: 'LinkedIn profile', href: '#', iconPath: '/icons/linkedin.svg' },
-    { label: 'Discord profile', href: '#', iconPath: '/icons/discord.svg' },
+    // TODO: add your Facebook profile URL, then uncomment this line.
+    // { label: 'Facebook profile', href: 'https://www.facebook.com/TODO', iconPath: '/icons/facebook.svg' },
+    { label: 'LinkedIn profile', href: 'https://www.linkedin.com/in/jeunagustero', iconPath: '/icons/linkedin.svg' },
   ],
 }
